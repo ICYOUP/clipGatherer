@@ -21,8 +21,8 @@ def download_vid(url, name):
         print(name)
     os.rename(reddit.file_name, 'C:\\Users\\Knigh\\Documents\\GitHub\\redditclips\\videos\\' + name +'.mp4')
 
-for submission in reddit_r.subreddit("leagueoflegends").top("week"):
-    if (submission.score > 10000):
+for submission in reddit_r.subreddit("leagueoflegends").top("day"):
+    if (submission.score > 250):
         if "v.redd" in submission.url:
             download_vid(submission.url, submission.title)
             
