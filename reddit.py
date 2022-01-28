@@ -1,8 +1,7 @@
 from redvid import Downloader
 import praw
-import requests
-import requests.auth
 import os
+from utils import *
 
 reddit_r = praw.Reddit(
     client_id="QMvKrQrYrkBXEJGRpxi1nQ",
@@ -21,12 +20,14 @@ def download_vid(url, name):
         print(name)
     os.rename(reddit.file_name, 'C:\\Users\\Knigh\\Documents\\GitHub\\redditclips\\videos\\' + name +'.mp4')
 
-for submission in reddit_r.subreddit("leagueoflegends").top("day"):
-    if (submission.score > 250):
-        if "v.redd" in submission.url:
-            download_vid(submission.url, submission.title)
-            
-
+def reddit_vid_download(subreddit, timePeriod, upvoteThreshhold):
+    for submission in reddit_r.subreddit(subreddit).top(timePeriod):
+        if (submission.score > upvoteThreshhold):
+            if "v.redd" in submission.url:
+                download_vid(submission.url, submission.title)
+            if 'clips.t' in submission.url:
+                os.system("twitch-dl download -q source " + submission.url)
+                move_files()
 
 
 
